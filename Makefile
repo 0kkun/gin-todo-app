@@ -26,3 +26,11 @@ logs:
 .PHONY: app
 app:
 	docker-compose exec app bash
+
+.PHONY: init
+init:
+	docker-compose exec app go mod init github.com/0kkun/gin-todo-app
+
+.PHONY: server
+server:
+	docker-compose exec app go run main.go

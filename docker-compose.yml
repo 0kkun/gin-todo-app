@@ -1,12 +1,13 @@
 version: '3'
 services:
   app:
-    container_name: gin-todo-app-container
     build:
       context: .
-      dockerfile: ./docker/go/Dockerfile
+      dockerfile: ./docker/local/go/Dockerfile
     tty: true
     volumes:
       - ./src:/go/src
     ports:
       - "3000:3000"
+    environment:
+        TZ: Asia/Tokyo
