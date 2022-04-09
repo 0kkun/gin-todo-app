@@ -8,39 +8,39 @@ import (
 
 // Todoのマイグレート
 func DbInit() *gorm.DB {
-	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/perfect_todo?parseTime=true")
+	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/github.com/0kkun/gin-todo-app?parseTime=true")
 	if err != nil {
 		fmt.Errorf("could not open database")
 	}
-	db.AutoMigrate(&domain.Todo{})
+	db.AutoMigrate(&models.Todo{})
 	return db
 }
 
 // DBの作成
-func DbCreate(todo domain.Todo) {
-	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/perfect_todo?parseTime=true")
+func DbCreate(todo models.Todo) {
+	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/github.com/0kkun/gin-todo-app?parseTime=true")
 	if err != nil {
 		fmt.Errorf("could not open database")
 	}
 	db.Create(&todo)
 }
 
-func DbRead(id ...int) []domain.Todo {
-	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/perfect_todo?parseTime=true")
+func DbRead(id ...int) []models.Todo {
+	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/github.com/0kkun/gin-todo-app?parseTime=true")
 	if err != nil {
 		fmt.Errorf("could not open database")
 	}
-	var todos []domain.Todo
+	var todos []models.Todo
 	db.Find(&todos)
 	return todos
 }
 
-func DbUpdate(id int, text string, status domain.Status, deadline int) domain.Todo {
-	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/perfect_todo?parseTime=true")
+func DbUpdate(id int, text string, status models.Status, deadline int) models.Todo {
+	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/github.com/0kkun/gin-todo-app?parseTime=true")
 	if err != nil {
 		fmt.Errorf("could not open database")
 	}
-	var todo domain.Todo
+	var todo models.Todo
 	db.First(&todo, id)
 	todo.Text = text
 	todo.Status = status
@@ -50,11 +50,11 @@ func DbUpdate(id int, text string, status domain.Status, deadline int) domain.To
 }
 
 func DbDelete(id int) {
-	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/perfect_todo?parseTime=true")
+	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/github.com/0kkun/gin-todo-app?parseTime=true")
 	if err != nil {
 		fmt.Errorf("could not open database")
 	}
-    var todo domain.Todo
+    var todo models.Todo
     db.First(&todo, id)
     db.Delete(&todo)
 }

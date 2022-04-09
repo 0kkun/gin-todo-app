@@ -12,3 +12,21 @@ services:
       - "3000:3000"
     environment:
         TZ: Asia/Tokyo
+
+  db:
+    container_name: gin_todo_app_db
+    build:
+      context: .
+      dockerfile: ./docker/local/mysql/Dockerfile
+    platform: linux/x86_64
+    volumes:
+      - ./docker/local/mysql/sqls:/docker-entrypoint-initdb.d
+      - ./docker/local/mysql/data:/var/lib/mysql
+    environment:
+      - TZ=Asia/Tokyo
+      - MYSQL_DATABASE=gin_todo_app
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+    ports:
+    - 4499:3306

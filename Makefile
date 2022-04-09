@@ -42,3 +42,11 @@ mod_tidy:
 .PHONY: run
 run:
 	docker-compose exec golang go run main.go
+
+.PHONY: mysql
+mysql:
+	docker-compose exec db bash -c 'mysql -u root -p'
+
+.PHONY: db
+db:
+	docker-compose exec db bash

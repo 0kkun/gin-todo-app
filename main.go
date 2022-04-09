@@ -2,9 +2,14 @@ package main
 
 import (
     "github.com/gin-gonic/gin"
+	"github.com/0kkun/gin-todo-app/infrastructure/database"
 )
 
 func main() {
+
+	db := database.DbInit()
+	defer db.Close()
+
     router := gin.Default()
     router.LoadHTMLGlob("templates/*.html")
 
