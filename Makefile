@@ -1,3 +1,8 @@
+.PHONY: init
+init:
+	@make build
+	@make mod_tidy
+
 .PHONY: up
 up:
 	docker-compose up -d
@@ -18,19 +23,22 @@ build_c:
 build:
 	docker-compose build
 
-
 .PHONY: logs
 logs:
 	docker-compose logs
 
 .PHONY: app
 app:
-	docker-compose exec app bash
+	docker-compose exec golang bash
 
-.PHONY: init
-init:
-	docker-compose exec app go mod init github.com/0kkun/gin-todo-app
+.PHONY: mod_init
+mod_init:
+	go mod init github.com/0kkun/gin-todo-app
 
-.PHONY: server
-server:
-	docker-compose exec app go run main.go
+.PHONY: mod_tidy
+mod_tidy:
+	go mod tidy
+
+.PHONY: run
+run:
+	docker-compose exec golang go run main.go

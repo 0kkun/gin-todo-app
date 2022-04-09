@@ -1,8 +1,8 @@
-package infrastructure
+package database
 
 import (
 	"fmt"
-	"gin-todo-app/src/domain"
+	"github.com/0kkun/gin-todo-app/domain/models"
 	"github.com/jinzhu/gorm"
 )
 
