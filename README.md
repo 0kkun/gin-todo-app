@@ -20,7 +20,7 @@
 
 ## 構築手順
 
-- docker buid & bmod tidy
+- docker buid & mod tidy
 ```
 make init
 ```
