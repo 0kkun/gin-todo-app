@@ -3,12 +3,14 @@ package main
 import (
     "github.com/gin-gonic/gin"
 	"github.com/0kkun/gin-todo-app/infrastructure/database"
+	"fmt"
+	"os"
 )
 
 func main() {
 
 	db := database.DbInit()
-	defer db.Close()
+	fmt.Println(db)
 
     router := gin.Default()
     router.LoadHTMLGlob("templates/*.html")
@@ -16,6 +18,6 @@ func main() {
     router.GET("/", func(c *gin.Context){
         c.HTML(200, "index.html", gin.H{})
     })
-
-    router.Run(":3000")
+	
+    router.Run(":" + os.Getenv("PORT"))
 }

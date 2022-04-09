@@ -9,9 +9,11 @@ services:
       - .:/go/src
     tty: true
     ports:
-      - "3000:3000"
+      - "${PORT}:${PORT}"
     environment:
-        TZ: Asia/Tokyo
+      TZ: Asia/Tokyo
+      DSN: ${DSN}
+      PORT: ${PORT}
 
   db:
     container_name: gin_todo_app_db
@@ -24,9 +26,9 @@ services:
       - ./docker/local/mysql/data:/var/lib/mysql
     environment:
       - TZ=Asia/Tokyo
-      - MYSQL_DATABASE=gin_todo_app
-      - MYSQL_USER=root
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     ports:
-    - 4499:3306
+    - ${LOCAL_DB_PORT}:${CONTAINER_DB_PORT}
