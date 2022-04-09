@@ -2,6 +2,7 @@
 init:
 	@make build
 	@make mod_tidy
+	cp .env.example .env
 
 .PHONY: up
 up:
