@@ -23,63 +23,41 @@ func DbInit() *gorm.DB {
 	return db
 }
 
+// InsertTodo Todoを保存する
+func InsertTodo(db *gorm.DB, todo models.Todo) {
+	// &は型を参照
+	db.Create(&todo)
+}
 
-// func CloseDB(db *gorm.DB) {
-// 	if err := db.Close(); err != nil {
-// 		log.Fatal("CloseDB failed:", err)
-// 	}
-// }
+// FetchTodo 任意の個数のint型のidを受け取り、Todoを取得して返す
+func FetchTodo(db *gorm.DB, id ...int) []models.Todo {
+	var todos []models.Todo
+	// Findはwhere句と同じ
+	db.Find(&todos)
+	return todos
+}
 
-// Todoのマイグレート
-// func DbInit() *gorm.DB {
-// 	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/gin_todo_app?parseTime=true")
-// 	if err != nil {
-// 		fmt.Errorf("could not open database")
-// 	}
-// 	fmt.Println("DB Connection Success")
-// 	db.AutoMigrate(&models.Todo{})
-// 	return db
-// }
+// getTodoByText はテキストでTodoを検索して返す
+func getTodoByText(db *gorm.DB, text string) models.Todo {
+	var todo models.Todo
+	db.First(&todo, "text=?", text)
+	return todo
+}
 
-// // DBの作成
-// func DbCreate(todo models.Todo) {
-// 	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/github.com/0kkun/gin-todo-app?parseTime=true")
-// 	if err != nil {
-// 		fmt.Errorf("could not open database")
-// 	}
-// 	db.Create(&todo)
-// }
+// updateTodo はTodoをアップデートする
+func updateTodo(db *gorm.DB, id int, text string, status models.Status, deadline int) models.Todo {
+	var todo models.Todo
+	db.First(&todo, id)
+	todo.Text = text
+	todo.Status = status
+	todo.Deadline = deadline
+	db.Save(&todo)
+	return todo
+}
 
-// func DbRead(id ...int) []models.Todo {
-// 	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/github.com/0kkun/gin-todo-app?parseTime=true")
-// 	if err != nil {
-// 		fmt.Errorf("could not open database")
-// 	}
-// 	var todos []models.Todo
-// 	db.Find(&todos)
-// 	return todos
-// }
-
-// func DbUpdate(id int, text string, status models.Status, deadline int) models.Todo {
-// 	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/github.com/0kkun/gin-todo-app?parseTime=true")
-// 	if err != nil {
-// 		fmt.Errorf("could not open database")
-// 	}
-// 	var todo models.Todo
-// 	db.First(&todo, id)
-// 	todo.Text = text
-// 	todo.Status = status
-// 	todo.Deadline = deadline
-// 	db.Save(&todo)
-// 	return todo
-// }
-
-// func DbDelete(id int) {
-// 	db, err := gorm.Open("mysql", "root:@tcp(locakhost:3306)/github.com/0kkun/gin-todo-app?parseTime=true")
-// 	if err != nil {
-// 		fmt.Errorf("could not open database")
-// 	}
-//     var todo models.Todo
-//     db.First(&todo, id)
-//     db.Delete(&todo)
-// }
+// DeleteTodo idを指定してTodoを削除する
+func DeleteTodoById(db *gorm.DB, id int) {
+	var todo models.Todo
+	db.First(&todo, id)
+	db.Delete(&todo)
+}
